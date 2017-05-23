@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from exchange_rates.views import USD_PLN_main
+from exchange_rates.views import NBPPage
 # 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^nbp/', USD_PLN_main.as_view(), name='nbp'),
+    url(r'^nbp/', NBPPage.as_view(), name='nbp'),
 ]
