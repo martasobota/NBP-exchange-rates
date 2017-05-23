@@ -5,4 +5,5 @@ def get_data(code):
     params = {'code': code}
     r = requests.get('http://api.nbp.pl/api/exchangerates/tables/B/?format=json', params=params)
     nbp = r.json()
-    nbp_list = {'nbp':nbp['results']}
+    nbp_list = {'nbp':nbp[]}
+    # nbp_list = {'nbp':nbp['results']}
