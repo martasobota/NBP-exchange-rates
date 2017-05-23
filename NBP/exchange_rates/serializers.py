@@ -6,4 +6,4 @@ from exchange_rates.models import NBP, TABLES
 class NBPSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = NBP
-		fields = ('table', 'currency', 'code', 'effective_date', 'rate')
+		fields = ('table', 'currency', 'code', 'effective_date', 'mid')
