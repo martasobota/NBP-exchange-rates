@@ -1,3 +1,5 @@
+import requests
+
 def get_data(code):
     url = 'http://api.nbp.pl/api/exchangerates/tables/B/?format=json' 
     params = {'code': code}
