@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.views import View
 import json
 import requests
-import nbp_service
+from . import nbp_service
+from django.views import generic
+
 
 # class USD_PLN_main(APIView):
 
@@ -30,5 +32,5 @@ import nbp_service
 
 class NBPPage(generic.TemplateView):
     def get(self,request):
-        nbp_list = services.get_data('usd', 'edwards')
+        nbp_list = nbp_service.get_data('usd')
         return render(request,'nbp.html',nbp_list)
