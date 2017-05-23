@@ -2,8 +2,8 @@ from django.db import models
 
 TABLES = (
 	(1, 'A'),
-	(2, 'B')
-	(3, 'C')
+	(2, 'B'),
+	(3, 'C'),
 	)
 
 # CURRENCIES = 
