@@ -5,7 +5,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.figure_factory as ff
 
-def get_7_working_days():
+def get_working_days():
 	"""
 	Creates table with dates in proper format (ISO 8601)
 	Range = 15, to save dates with surplus, e.g. if you are checking exchange rates for last 7 days on Thursday, 
@@ -18,7 +18,7 @@ def get_7_working_days():
 	last_days = ["{:%Y-%m-%d}".format(today - timedelta(days=days_delta)) for days_delta in range(15)]
 	return last_days
 
-def get_data(code):	
+def get_data(code, last_days):	
 	url = requests.get('http://api.nbp.pl/api/exchangerates/rates/A/' + code + '/' + last_days[-1] + '/' + last_days[0] + '/?format=json').json()
 	return url
 
@@ -34,19 +34,20 @@ def create_matrix(url):
 		ex_rates_matrix.append(plus)
 
 	rates_table = np.matrix(ex_rates_matrix)
-
 	'''
 	Prints table with exchange rates data usd/pln for last 7 working days
 	'''
 	print(rates_table)
+	return ex_rates_matrix
 
+def create_chart(ex_rates_matrix):
 	'''
 	Creates chart with data from matrix
 	'''
 	table = ff.create_table(ex_rates_matrix)
 	py.plot(table, filename='ex_rates_7days_usd_table')
 
-last_7 = get_7_working_days()
-get_data('usd', last_7)
-rate_data = get_data('usd')
-create_matrix(rate_data)
+last_7 = get_working_days()
+rate_data = get_data('usd', last_7)
+matrix = create_matrix(rate_data)
+chart = create_chart(matrix)
