@@ -14,68 +14,42 @@ def get_data(code):
 	There are times during the year when there are also holidays, so range should be increased. 
 	Value 15 is my prediction, if I would have more time I would try do it more accurate
 	"""
-
 	today = date.today()
 	last_days = ["{:%Y-%m-%d}".format(today - timedelta(days=days_delta)) for days_delta in range(15)]	
-
-	start = last_days[-1]
-	end = last_days[0]
-	days = np.busday_count(start,end)
-	print(days)
-	"""
-	url taking informations from last 7 days - it is buggy, because there are no new exchange rates
-	during the weekend, this line should be changed so it will be getting data for 7 working days
-	"""
-	
 	url = requests.get('http://api.nbp.pl/api/exchangerates/rates/A/' + code + '/' + last_days[-1] + '/' + last_days[0] + '/?format=json').json()
 	print(url)
 	# return url
 
-	# print("Url here: ")
-	# print(url)
-	# print('Items:')
-	# print(url.items())
-	# print('Test')
-	print('url len')
-	print(len(url['rates']))
-
 	data = []
 	for u in url['rates'][-7:]:
 		data.append(u)
+
+	ex_rates_matrix = [['Date', 'Rate'], ]
 
 	print('proper dates:')
 	print(data)
 	print(len(data))
 	print(type(data))
 	for p in data:
-		print(p['effectiveDate'])
-		print(p['mid'])
+		plus = []
+		plus.append(p['effectiveDate'])
+		plus.append(p['mid'])
+		ex_rates_matrix.append(plus)
 
+	print(ex_rates_matrix)
+
+	print("Matrix test:")
+	print(np.matrix(ex_rates_matrix))
+
+	# table = ff.create_table(ex_rates_matrix)
+	# # py.iplot(table, filename='simple_table')
+	# py.plot(table, filename='ex_rates_7days_table')
 
 get_data('usd')
-
-	# data_matrix = [['Date', 'Rate'],
-	# []
-
-	# ]
-
-	# lista = []
-	# for effectiveDate, mid in url['rates']:
-	# 	lista.append(['effectiveDate'])
-	# 	lista.append(['mid'])
-
-	# print(lista)
-
 
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # 
-
-# def create_table():
-	# get_data('usd')
-	# print(url)
-
-# create_table()
 
 # import plotly.plotly as py
 # import plotly.figure_factory as ff
