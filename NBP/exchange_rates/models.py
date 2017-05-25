@@ -19,5 +19,3 @@ class NBP(models.Model):
 	ze względu na większą precyzyjność w stosunku do FloatField
 	'''
 	mid = models.DecimalField(max_digits=16, decimal_places=12, default='0.0') 
-	
-#przeliczanie ze złotówek na walutę zeby móc pokaza inną parę walut
