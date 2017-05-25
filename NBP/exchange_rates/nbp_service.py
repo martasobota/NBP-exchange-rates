@@ -37,7 +37,7 @@ def get_data(code):
 	print(rates_table)
 
 	'''
-	Creates chart with data from ra
+	Creates chart with data from matrix
 	'''
 	table = ff.create_table(ex_rates_matrix)
 	py.plot(table, filename='ex_rates_7days_usd_table')
