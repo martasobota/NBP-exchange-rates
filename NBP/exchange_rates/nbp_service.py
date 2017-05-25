@@ -17,65 +17,29 @@ def get_data(code):
 	today = date.today()
 	last_days = ["{:%Y-%m-%d}".format(today - timedelta(days=days_delta)) for days_delta in range(15)]	
 	url = requests.get('http://api.nbp.pl/api/exchangerates/rates/A/' + code + '/' + last_days[-1] + '/' + last_days[0] + '/?format=json').json()
-	print(url)
 	# return url
 
 	data = []
 	for u in url['rates'][-7:]:
 		data.append(u)
-
 	ex_rates_matrix = [['Date', 'Rate'], ]
-
-	print('proper dates:')
-	print(data)
-	print(len(data))
-	print(type(data))
-	for p in data:
+	for r in data:
 		plus = []
-		plus.append(p['effectiveDate'])
-		plus.append(p['mid'])
+		plus.append(r['effectiveDate'])
+		plus.append(r['mid'])
 		ex_rates_matrix.append(plus)
 
-	print(ex_rates_matrix)
+	rates_table = np.matrix(ex_rates_matrix)
 
-	print("Matrix test:")
-	print(np.matrix(ex_rates_matrix))
+	'''
+	Prints table with exchange rates data usd/pln for last 7 working days
+	'''
+	print(rates_table)
 
-	# table = ff.create_table(ex_rates_matrix)
-	# # py.iplot(table, filename='simple_table')
-	# py.plot(table, filename='ex_rates_7days_table')
+	'''
+	Creates chart with data from ra
+	'''
+	table = ff.create_table(ex_rates_matrix)
+	py.plot(table, filename='ex_rates_7days_usd_table')
 
 get_data('usd')
-
-
-
-# # # # # # # # # # # # # # # # # # # # # # # # 
-
-# import plotly.plotly as py
-# import plotly.figure_factory as ff
-
-# data_matrix = [['Country', 'Year', 'Population'],
-#                ['United States', 2000, 282200000],
-#                ['Canada', 2000, 27790000],
-#                ['United States', 2005, 295500000],
-#                ['Canada', 2005, 32310000],
-#                ['United States', 2010, 309000000],
-#                ['Canada', 2010, 34000000]]
-
-# table = ff.create_table(data_matrix)
-# py.iplot(table, filename='simple_table')
-
-# # # # # # # # # # # # # # # # # # # # # # # # 
-
-# import plotly.plotly as py
-# import plotly.graph_objs as go
-
-# import pandas as pd
-
-# df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
-
-# data = [go.Scatter(
-#           x=df.Date,
-#           y=df['AAPL.Close'])]
-
-# py.iplot(data)
